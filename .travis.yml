@@ -1,0 +1,10 @@
+language: java
+jdk:
+  - openjdk18
+before_install:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker pull openjdk:18-jdk-slim
+
+script:
+  - ./mvnw clean install
+  - ./mvnw deploy jib:build -P deploy-docker
